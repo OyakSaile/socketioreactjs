@@ -1,15 +1,20 @@
-import { HeaderContainer } from "./styles";
+import { HeaderContainer, ImageContainer } from "./styles";
 import logoProio from "../../assets/logoproiot.png";
 import { menuItens } from "./constants/menuItems";
+import { useLoading } from "../../hooks/useLoading";
+import { useEffect } from "react";
 
 export const Header: React.FC = () => {
+  const { Loading } = useLoading();
+
+
   return (
     <HeaderContainer>
-      <span>
+      <ImageContainer>
         <img src={logoProio} alt="" />
-      </span>
+      </ImageContainer>
       <ul>
-        {menuItens.map(({ active, linkText, linkUrl }) => (
+        {menuItens.map(({ linkText, linkUrl }) => (
           <li>
             <a href={linkUrl}>{linkText}</a>
           </li>
