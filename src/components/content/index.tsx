@@ -1,7 +1,8 @@
-import { Container , ContentWrapper} from "./styles";
+import { Container, ContentWrapper } from "./styles";
 import { ChartWithData } from "./components/chartWithData";
-import { Humidity } from "./components/Humidity";
-import { Temperature } from "./components/Temperature";
+import { Humidity } from "./components/humidity";
+import { Temperature } from "./components/temperature";
+import { InformationCard } from "../layouts/informationCard";
 
 export const Content: React.FC = () => {
   return (
