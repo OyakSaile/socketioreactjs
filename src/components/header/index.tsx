@@ -1,25 +1,28 @@
-import { HeaderContainer, ImageContainer } from "./styles";
+import {
+  HeaderContainer,
+  ImageContainer,
+  Content,
+  StatusSocket,
+} from "./styles";
 import logoProio from "../../assets/logoproiot.png";
 import { menuItens } from "./constants/menuItems";
-import { useLoading } from "../../hooks/useLoading";
-import { useEffect } from "react";
-
+import { Container } from "react-bootstrap";
 export const Header: React.FC = () => {
-  const { Loading } = useLoading();
-
-
   return (
     <HeaderContainer>
-      <ImageContainer>
-        <img src={logoProio} alt="" />
-      </ImageContainer>
-      <ul>
-        {menuItens.map(({ linkText, linkUrl }) => (
-          <li>
-            <a href={linkUrl}>{linkText}</a>
-          </li>
-        ))}
-      </ul>
+      <Container>
+        <Content>
+          <ImageContainer>
+            <img src={logoProio} alt="Logo Tipo" />
+          </ImageContainer>
+
+          <StatusSocket>
+            <span></span>
+            <p>Conexão ativa</p>
+            <button>Desativar conexão</button>
+          </StatusSocket>
+        </Content>
+      </Container>
     </HeaderContainer>
   );
 };
