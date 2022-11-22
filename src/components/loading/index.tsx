@@ -1,5 +1,9 @@
-export const Loading : React.FC = () => { 
+import loadingGif from "./assets/loadingGif.gif";
+import { LoadingContainer } from "./styles";
+export const Loading: React.FC = () => {
   return (
-    <h1>Loading</h1>
-  )
-}
+    <LoadingContainer>
+      <img src={loadingGif} alt="" />
+    </LoadingContainer>
+  );
+};

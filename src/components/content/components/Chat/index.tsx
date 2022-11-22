@@ -21,28 +21,26 @@ export const Chat: React.FC<TemperatureProps> = ({ weatherData, socket }) => {
   const userName = window.localStorage.getItem("userName");
 
   const handleSendMessage = (e: FormEvent) => {
-    const generateDate = new Date();
-
-    console.log();
-
     e.preventDefault();
+    if (message) {
+      const generateDate = new Date();
 
-    const temporaryObject = {
-      message,
-      userName,
-      date: generateDate.toLocaleTimeString(),
-    };
+      const temporaryObject = {
+        message,
+        userName,
+        date: generateDate.toLocaleTimeString(),
+      };
 
-    setChatHistoric([temporaryObject, ...chatHistoric]);
+      setChatHistoric([temporaryObject, ...chatHistoric]);
 
-    socket.emit("sendMessage", temporaryObject);
+      socket.emit("sendMessage", temporaryObject);
 
-    setMessage("");
+      setMessage("");
+    }
   };
 
   socket.on("receivedMessage", (returnedMessages: any) => {
     setChatHistoric([returnedMessages, ...chatHistoric]);
-    console.log(returnedMessages)
   });
 
   return (
@@ -64,7 +62,7 @@ export const Chat: React.FC<TemperatureProps> = ({ weatherData, socket }) => {
           onChange={(e) => {
             setMessage(e.target.value);
           }}
-          placeholder="Type a message..."
+          placeholder="Enviar Mensagem"
         />
         <button type="button" onClick={handleSendMessage}>
           <PaperPlaneRight />

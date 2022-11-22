@@ -1,5 +1,6 @@
 import { CardContainer } from "./styles";
-import { Thermometer } from "phosphor-react";
+import { DropHalfBottom, Thermometer } from "phosphor-react";
+import { Loading } from "../../loading";
 
 interface CardDashboardProps {
   data: any[];
@@ -15,12 +16,16 @@ export const CardDashboard: React.FC<CardDashboardProps> = ({
   return (
     <CardContainer>
       {loading ? (
-        "Carregando.."
+        <Loading />
       ) : (
         <>
           <p>Última {title} informada</p>
           <span>
-            <Thermometer size={32} />
+            {title === "Umidade" ? (
+              <DropHalfBottom size={32} />
+            ) : (
+              <Thermometer size={32} />
+            )}
           </span>
 
           <p>{title}</p>

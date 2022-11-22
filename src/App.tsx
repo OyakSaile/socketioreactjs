@@ -13,7 +13,6 @@ export function App() {
     if (!isUserNameFilled) {
       setIsOpen(true);
     }
-    
   }, []);
   return (
     <LoadingProvider>

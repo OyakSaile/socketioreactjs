@@ -7,31 +7,25 @@ import { Header } from "../../components/header";
 import { Content } from "../../components/content";
 
 export const DashBoard: React.FC = () => {
-  const socket = io("http://localhost:3333");
+  const socket = io("http://localhost:3333", {
+    autoConnect: false,
+  });
 
   const [data, setData] = useState<any>();
 
-  const [isDisabledWebSocket, setIsDisabledWebSocket] = useState(
-    !!window.localStorage.getItem("stopSocketio")
-  );
+  useEffect(() => {
+    const isEnabledWebSocket =
+      window.localStorage.getItem("stopSocket") === null ? true : false;
 
-  const handleStopDataRequest = () => {
-    // window.localStorage.setItem("stopSocketio", "true");
-    setIsDisabledWebSocket(true);
-  };
-
-  const handleStartDataRequest = () => {
-    // setLoading(true);
-
-    // window.localStorage.removeItem("stopSocketio");
-
-    setIsDisabledWebSocket(false);
-  };
+    if (isEnabledWebSocket) {
+      socket.open();
+    }
+  }, []);
 
   return (
     <LoadingProvider>
       <Wrapper>
-        <Header />
+        <Header socket={socket} />
         <Container className="my-5">
           <Content socket={socket} weatherData={data} />
         </Container>

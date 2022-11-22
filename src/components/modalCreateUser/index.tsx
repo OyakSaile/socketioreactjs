@@ -27,32 +27,16 @@ export const ModalCreateUser: React.FC<ModalCreateUserProps> = ({
   setIsOpen,
 }) => {
   const [userName, setUserName] = useState("");
-  // function openModal() {
-  //   setIsOpen(true);
-  // }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-  }
-
-  // function closeModal() {
-  //   setIsOpen(false);
-  // }
 
   const handleSendUserName = (e: FormEvent) => {
     window.localStorage.setItem("userName", userName);
-      
+
     e.preventDefault();
     setIsOpen(false);
-    alert(userName);
   };
 
   return (
-    <Modal
-      isOpen={modalIsOpen}
-      onAfterOpen={afterOpenModal}
-      style={customStyles}
-    >
+    <Modal isOpen={modalIsOpen} style={customStyles}>
       <ModalContent onSubmit={handleSendUserName}>
         <p>Para acessar o chat informe um nome de usuário.</p>
         <span>Passo obrigatório</span>

@@ -12,18 +12,43 @@ interface ContentProps {
 }
 
 export const Content: React.FC<ContentProps> = ({ socket }) => {
-  const [deviceData, setDeviceData] = useState<any[]>([]);
+  const [devicesData, setDevicesData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [tabHasFocus, setTabHasFocus] = useState(true);
 
   useEffect(() => {
-    socket.emit("requestDeviceData");
+    const handleFocus = () => {
+      console.log("Tab has focus");
+      setTabHasFocus(true);
+    };
+
+    const handleBlur = () => {
+      console.log("Tab lost focus");
+      setTabHasFocus(false);
+    };
+
+    window.addEventListener("focus", handleFocus);
+    window.addEventListener("blur", handleBlur);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+      window.removeEventListener("blur", handleBlur);
+    };
   }, []);
 
+  useEffect(() => {
+    if (tabHasFocus) {
+      setInterval(() => {
+        socket.emit("requestDeviceData");
+      }, 10000);
+    }
+  }, [tabHasFocus]);
+
   socket.on("devicesData", (data: any) => {
-    setDeviceData(data);
+    setDevicesData(data);
   });
 
-  const lastDevice = deviceData.slice(-1);
+  const lastDevice = devicesData.slice(-1);
 
   const lastTemperature = lastDevice[0]?.variables.filter(
     (item: any) => item.variable_name === "Temperature"
@@ -34,17 +59,17 @@ export const Content: React.FC<ContentProps> = ({ socket }) => {
   );
 
   useEffect(() => {
-    if (deviceData.length > 0) {
+    if (devicesData.length > 0) {
       setLoading(false);
     }
-  }, [deviceData]);
+  }, [devicesData]);
 
   return (
     <Container>
       <Row>
         <Col md={12} lg={6}>
           <Row>
-            <Col>
+            <Col >
               <CardDashboard
                 loading={loading}
                 title="Temperature"
@@ -62,12 +87,12 @@ export const Content: React.FC<ContentProps> = ({ socket }) => {
 
           <Row className="my-5">
             <Col>
-              <ChartWithData />
+              <ChartWithData statisticsData={devicesData} />
             </Col>
           </Row>
         </Col>
         <Col md={12} lg={6}>
-          <Chat socket={socket} weatherData={deviceData} />
+          <Chat socket={socket} weatherData={devicesData} />
         </Col>
       </Row>
     </Container>

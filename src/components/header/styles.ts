@@ -7,7 +7,7 @@ export const HeaderContainer = styled.header`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   gap: 1rem;
   align-items: center;
-  height: 5rem;
+  min-height: 5rem;
 
   > ul {
     display: flex;
@@ -27,11 +27,19 @@ export const HeaderContainer = styled.header`
       }
     }
   }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 export const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const ImageContainer = styled.div`
@@ -50,6 +58,13 @@ export const StatusSocket = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 100%;
+
+    &.red {
+      background-color: red;
+    }
+    &.green {
+      background-color: green;
+    }
   }
 
   > p {
@@ -57,7 +72,7 @@ export const StatusSocket = styled.div`
   }
 
   > button {
-    border: 1px solid red;
+    border: 1px solid black;
     background: none;
     padding: 0.3rem;
     transition: all 0.2s;
